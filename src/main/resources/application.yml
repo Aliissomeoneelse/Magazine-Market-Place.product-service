@@ -2,10 +2,10 @@ spring:
   profiles:
     active: dev
   application:
-    name: basket-service
+    name: product-service
   cloud:
     config:
       uri: http://localhost:8888/
-      label: dev/Alisher
+      label: dev/Behzod
   config:
     import: optional:configserver:http://localhost:8888/
