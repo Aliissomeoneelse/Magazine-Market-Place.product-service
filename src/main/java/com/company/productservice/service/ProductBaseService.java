@@ -8,14 +8,9 @@ import com.company.productservice.repository.ProductBaseRepository;
 import com.company.productservice.repository.ProductBaseRepositoryImpl;
 import com.company.productservice.service.mapper.ProductBaseMapper;
 import com.company.productservice.service.validation.ProductBaseValidation;
-
-
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -45,12 +40,12 @@ public class ProductBaseService {
             productBaseRepository.save(productBase);
             return ResponseDto.<ProductBaseDto>builder()
                     .success(true)
-                    .message("Product successful created!")
+                    .message("ProductBase successful created!")
                     .data(productBaseMapper.toDto(productBase))
                     .build();
         } catch (Exception e) {
             return ResponseDto.<ProductBaseDto>builder()
-                    .message("Product while saving error :: " + e.getMessage())
+                    .message("ProductBase while saving error :: " + e.getMessage())
                     .code(-1)
                     .build();
         }
@@ -60,7 +55,7 @@ public class ProductBaseService {
         Optional<ProductBase> optional = productBaseRepository.findByIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
             return ResponseDto.<ProductBaseDto>builder()
-                    .message("Product base does not found!")
+                    .message("ProductBase base does not found!")
                     .code(-2)
                     .build();
         }
@@ -91,23 +86,25 @@ public class ProductBaseService {
         Optional<ProductBase> optional = productBaseRepository.findByIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
             return ResponseDto.<ProductBaseDto>builder()
-                    .message("Product base does not found!")
-                    .code(-2)
+                    .message("ProductBase is not found")
+                    .code(-1)
+                    .success(false)
                     .build();
         }
         try {
-            ProductBase productBase = productBaseMapper.toEntity(dto);
+            ProductBase productBase = productBaseMapper.updateUsersFromDto(dto, optional.get());
             productBase.setId(optional.get().getId());
             productBase.setUpdatedAt(LocalDateTime.now());
             productBaseRepository.save(productBase);
             return ResponseDto.<ProductBaseDto>builder()
                     .success(true)
-                    .message("Product successful updated!")
+                    .message("ProductBase successful updated!")
                     .data(productBaseMapper.toDto(productBase))
                     .build();
+
         } catch (Exception e) {
             return ResponseDto.<ProductBaseDto>builder()
-                    .message("Product while updating error :: " + e.getMessage())
+                    .message("ProductBase while updating error :: " + e.getMessage())
                     .code(-1)
                     .build();
         }
@@ -117,7 +114,7 @@ public class ProductBaseService {
         Optional<ProductBase> optional = productBaseRepository.findByIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
             return ResponseDto.<ProductBaseDto>builder()
-                    .message("Product base does not found!")
+                    .message("ProductBase base does not found!")
                     .code(-2)
                     .build();
         }
@@ -127,12 +124,12 @@ public class ProductBaseService {
             productBaseRepository.save(productBase);
             return ResponseDto.<ProductBaseDto>builder()
                     .success(true)
-                    .message("Product successful deleted!")
+                    .message("ProductBase successful deleted!")
                     .data(productBaseMapper.toDto(productBase))
                     .build();
         } catch (Exception e) {
             return ResponseDto.<ProductBaseDto>builder()
-                    .message("Product while deleting error :: " + e.getMessage())
+                    .message("ProductBase while deleting error :: " + e.getMessage())
                     .code(-1)
                     .build();
         }

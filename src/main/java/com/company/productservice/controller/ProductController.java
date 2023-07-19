@@ -26,15 +26,15 @@ public class ProductController {
         return productService.createProduct(dto);
     }
 
-    @GetMapping("/get")
+    @GetMapping(value = ("/get/{id}"))
     @Operation(
             tags = "Product"
     )
-    public ResponseDto<ProductDto> get (@RequestParam Integer id) {
+    public ResponseDto<ProductDto> get (@PathVariable("id") Integer id) {
         return productService.get(id);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping(value = ("/get-all"))
     @Operation(
             tags = "Product"
     )
@@ -42,19 +42,19 @@ public class ProductController {
         return productService.getAllProducts(params);
     }
 
-    @PutMapping("/update")
+    @PutMapping(value = "/update/{id}")
     @Operation(
             tags = "Product"
     )
-    public ResponseDto<ProductDto> update(@RequestParam Integer id, @RequestBody ProductDto dto) {
+    public ResponseDto<ProductDto> update(@PathVariable("id") Integer id, @RequestBody ProductDto dto) {
         return productService.updateProduct(dto, id);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping(value = ("/delete/{id}"))
     @Operation(
             tags = "Product"
     )
-    public ResponseDto<ProductDto> delete(@RequestParam("id") Integer id) {
+    public ResponseDto<ProductDto> delete(@PathVariable("id") Integer id) {
         return productService.deleteProduct(id);
     }
 }

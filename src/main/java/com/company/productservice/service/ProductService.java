@@ -1,6 +1,7 @@
 package com.company.productservice.service;
 
 import com.company.productservice.dto.ErrorDto;
+import com.company.productservice.dto.ProductBaseDto;
 import com.company.productservice.dto.ProductDto;
 import com.company.productservice.dto.ResponseDto;
 import com.company.productservice.module.Product;
@@ -76,24 +77,23 @@ public class ProductService {
 
 
     }
-    public ResponseDto<ProductDto> updateProduct(ProductDto dto, Integer id) {
-
+    public ResponseDto<ProductDto> update(ProductDto dto, Integer id) {
         Optional<Product> optional = productRepository.findByIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
             return ResponseDto.<ProductDto>builder()
-                    .message("Product  not found")
+                    .message("Product is not found")
                     .code(-1)
                     .success(false)
                     .build();
         }
         try {
-            Product product = productMapper.toEntity(dto);
+            Product product = productMapper.updateUsersFromDto(dto, optional.get());
             product.setId(optional.get().getId());
             product.setUpdatedAt(LocalDateTime.now());
             productRepository.save(product);
             return ResponseDto.<ProductDto>builder()
                     .success(true)
-                    .message("Product was successfully updated!")
+                    .message("Product successful updated!")
                     .data(productMapper.toDto(product))
                     .build();
 

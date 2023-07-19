@@ -35,8 +35,6 @@ public class Product {
     @Column(name = "prod_base_id")
     private Integer prodBaseId;
     private Double amount;
-    @Column(name = "image_id")
-    private Integer imageId;
     //one product to one image
     @Column(name = "expired_at")
     private LocalDateTime expiredAt;

@@ -18,8 +18,7 @@ public class ProductBase {
     private Integer id;
 
     @OneToMany(mappedBy = "prodBaseId")
-    Set<com.example.productcategory.module.Product> products;
-
+    Set<Product> products;
     @Column(name = "prod_name")
     private String prodName;
     @Column(name = "received_price")
